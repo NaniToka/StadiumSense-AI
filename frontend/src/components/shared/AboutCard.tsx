@@ -1,5 +1,5 @@
 /**
- * AboutCard — tasteful "built by" attribution credit.
+ * AboutCard -- tasteful "built by" attribution credit.
  *
  * Rendered as a small collapsible footer section. Collapsed by default,
  * showing only a one-line prompt. Expanding reveals the project summary
@@ -53,7 +53,6 @@ export default function AboutCard() {
       style={{ borderTop: '1px solid var(--navy-800)' }}
       aria-label="About this project"
     >
-      {/* Toggle button */}
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
@@ -65,11 +64,10 @@ export default function AboutCard() {
         onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
       >
         {expanded ? <ChevronDown size={11} aria-hidden="true" /> : <ChevronUp size={11} aria-hidden="true" />}
-        Built by Toka Nani · StadiumSense AI · FIFA World Cup 2026
+        Built by Toka Nani - StadiumSense AI - FIFA World Cup 2026
         {expanded ? <ChevronDown size={11} aria-hidden="true" /> : <ChevronUp size={11} aria-hidden="true" />}
       </button>
 
-      {/* Expanded panel */}
       {expanded && (
         <div
           id="about-panel"
@@ -79,7 +77,6 @@ export default function AboutCard() {
             borderTop: '1px solid var(--navy-800)',
           }}
         >
-          {/* Project blurb */}
           <div className="flex items-start gap-3 mb-4">
             <div
               className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-sm font-black"
@@ -102,13 +99,12 @@ export default function AboutCard() {
                 className="text-xs mt-0.5 leading-snug"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                AI-powered stadium operations platform for FIFA World Cup 2026 — 
+                AI-powered stadium operations platform for FIFA World Cup 2026 -
                 real-time crowd management, multilingual fan assistance, and sustainability tracking.
               </p>
             </div>
           </div>
 
-          {/* Built by credit */}
           <div
             className="rounded-xl p-3"
             style={{
