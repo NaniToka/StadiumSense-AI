@@ -29,7 +29,7 @@ import QuickChips from '../components/fan/QuickChips'
 import TypingIndicator from '../components/fan/TypingIndicator'
 import LanguageSelector from '../components/fan/LanguageSelector'
 import A11yPanel from '../components/fan/A11yPanel'
-import AboutCard from '../components/shared/AboutCard'
+// import AboutCard from '../components/shared/AboutCard'  // temporarily disabled
 
 // ---------------------------------------------------------------------------
 // Welcome screen — shown when the conversation is empty
@@ -256,7 +256,7 @@ export default function FanCompanion() {
         />
 
         {/* ── About credit ──────────────────────────────────── */}
-        <AboutCard />
+        {/* <AboutCard /> temporarily disabled */}
       </main>
 
       {/* ── Accessibility panel (portal-like overlay) ─────── */}

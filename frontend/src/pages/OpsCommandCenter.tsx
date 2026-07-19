@@ -21,7 +21,7 @@ import StadiumHeatmap from '../components/ops/StadiumHeatmap'
 import AlertFeed from '../components/ops/AlertFeed'
 import SustainabilityPanel from '../components/ops/SustainabilityPanel'
 import AskAIPanel from '../components/ops/AskAIPanel'
-import AboutCard from '../components/shared/AboutCard'
+// import AboutCard from '../components/shared/AboutCard'  // temporarily disabled
 
 const STADIUM_ID = 'wc2026-stadium-1'
 
@@ -408,7 +408,7 @@ export default function OpsCommandCenter() {
       </div>
 
       {/* ── About / attribution footer ───────────────────── */}
-      <AboutCard />
+      {/* <AboutCard /> temporarily disabled */}
     </div>
   )
 }
