@@ -8,7 +8,7 @@
  * Designed to feel like a professional attribution, not a resume dump.
  */
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, Github, Linkedin, Globe, Mail } from 'lucide-react'
+import { ChevronDown, ChevronUp, Link2, Globe, Mail } from 'lucide-react'
 
 interface LinkItem {
   icon: React.ReactNode
@@ -19,13 +19,13 @@ interface LinkItem {
 
 const LINKS: LinkItem[] = [
   {
-    icon: <Github size={13} aria-hidden="true" />,
+    icon: <Link2 size={13} aria-hidden="true" />,
     label: 'GitHub profile',
     href: 'https://github.com/NaniToka',
     display: 'github.com/NaniToka',
   },
   {
-    icon: <Linkedin size={13} aria-hidden="true" />,
+    icon: <Link2 size={13} aria-hidden="true" />,
     label: 'LinkedIn profile',
     href: 'https://www.linkedin.com/in/toka-nani-33a124359/',
     display: 'linkedin.com/in/toka-nani',
@@ -131,7 +131,7 @@ export default function AboutCard() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {LINKS.map(({ icon, label, href, display }) => (
-                <a
+                
                   key={href}
                   href={href}
                   target={href.startsWith('mailto') ? undefined : '_blank'}
