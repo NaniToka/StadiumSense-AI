@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   StadiumSense AI — Design Tokens
+   Dark navy / electric green FIFA 2026 palette
+   ───────────────────────────────────────────── */
+@layer base {
+  :root {
+    --navy-950: #040d1a;
+    --navy-900: #071428;
+    --navy-800: #0b1f3f;
+    --navy-700: #0f2a55;
+    --navy-600: #14376b;
+
+    --green-400: #00e676;
+    --green-500: #00c853;
+    --green-600: #00a843;
+    --green-glow: 0 0 16px rgba(0, 230, 118, 0.45);
+
+    --text-primary: #f0f4ff;
+    --text-secondary: #8ba3cc;
+    --text-muted: #4a6388;
+
+    --bubble-user-from: #00c853;
+    --bubble-user-to: #00e676;
+    --bubble-ai-bg: #0f2a55;
+    --bubble-ai-border: #1a3d6e;
+
+    --chip-bg: rgba(0, 200, 83, 0.12);
+    --chip-border: rgba(0, 230, 118, 0.3);
+    --chip-hover: rgba(0, 200, 83, 0.25);
+
+    --input-bg: #0b1f3f;
+    --input-border: #1a3d6e;
+    --input-focus: #00e676;
+
+    --widget-bg: rgba(11, 31, 63, 0.9);
+    --widget-border: rgba(0, 230, 118, 0.2);
+
+    /* Base font size — increased by a11y toggle */
+    --base-font-size: 16px;
+  }
+
+  /* Large text accessibility mode */
+  .a11y-large-text {
+    --base-font-size: 20px;
+  }
+
+  /* High contrast mode — boost contrast ratios to WCAG AAA */
+  .a11y-high-contrast {
+    --navy-900: #000000;
+    --navy-800: #0a0a0a;
+    --bubble-ai-bg: #000000;
+    --bubble-ai-border: #ffffff;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --green-400: #00ff84;
+    --green-500: #00ff84;
+    --chip-bg: rgba(255, 255, 255, 0.1);
+    --chip-border: rgba(255, 255, 255, 0.6);
+    --input-border: #ffffff;
+  }
+
+  html {
+    font-size: var(--base-font-size);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--navy-950);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+
+  /* Focus ring — visible for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid var(--green-400);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Custom animations
+   ───────────────────────────────────────────── */
+@layer utilities {
+  /* Typing indicator dots */
+  @keyframes bounce-dot {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40%           { transform: translateY(-6px); opacity: 1; }
+  }
+
+  .dot-1 { animation: bounce-dot 1.2s ease-in-out infinite; }
+  .dot-2 { animation: bounce-dot 1.2s ease-in-out 0.2s infinite; }
+  .dot-3 { animation: bounce-dot 1.2s ease-in-out 0.4s infinite; }
+
+  /* Message entrance */
+  @keyframes msg-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .msg-enter { animation: msg-in 0.22s ease-out forwards; }
+
+  /* Pulse ring on the LIVE badge */
+  @keyframes pulse-ring {
+    0%   { transform: scale(1);   opacity: 0.8; }
+    70%  { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  .live-ring { animation: pulse-ring 1.8s ease-out infinite; }
+
+  /* Shimmer for loading skeleton */
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to   { background-position: 200% 0; }
+  }
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--navy-800) 25%,
+      var(--navy-700) 50%,
+      var(--navy-800) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Green glow on focused input */
+  .input-glow:focus-within {
+    box-shadow: var(--green-glow);
+  }
+
+  /* Crowd density bar fill transition */
+  .density-bar {
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Chip press animation */
+  @keyframes chip-tap {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(0.94); }
+    100% { transform: scale(1); }
+  }
+  .chip-tap { animation: chip-tap 0.15s ease-out; }
+
+  /* A11y panel slide-up */
+  @keyframes panel-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .panel-slide-up { animation: panel-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
+
+  /* Hide scrollbar but keep scroll behaviour */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Streaming cursor blink */
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .streaming-cursor::after {
+    content: '▌';
+    animation: cursor-blink 0.7s step-start infinite;
+    color: var(--green-400);
+    margin-left: 1px;
+  }
+
+  /* Critical zone SVG pulse */
+  @keyframes zone-critical-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.6; }
+  }
+  .critical-zone-pulse { animation: zone-critical-pulse 1.4s ease-in-out infinite; }
+}

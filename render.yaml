@@ -1,0 +1,88 @@
+# =============================================================================
+# render.yaml — StadiumSense AI Infrastructure as Code
+#
+# Defines two Render services:
+#   1. stadiumsense-backend  — Python FastAPI (Docker runtime)
+#   2. stadiumsense-frontend — React SPA (Static Site)
+#
+# SECRETS: Never commit real values here.
+# Set all sensitive env vars in the Render dashboard under
+#   Service → Environment → Add Environment Variable.
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # 1. Backend — FastAPI served via Uvicorn in a Docker container
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: stadiumsense-backend
+    runtime: docker
+    # Render builds the image from ./backend/Dockerfile
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    # Render free tier: auto-deploys on every push to the default branch
+    autoDeploy: true
+
+    envVars:
+      # ── Required secrets — set these in the Render dashboard, NOT here ──
+      - key: GEMINI_API_KEY
+        sync: false          # "sync: false" means Render won't overwrite manual values
+
+      - key: GOOGLE_CLOUD_PROJECT
+        sync: false
+
+      # ── Optional overrides ──
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+
+      - key: FIRESTORE_DATABASE
+        value: "(default)"
+
+      - key: DEFAULT_STADIUM_ID
+        value: wc2026-stadium-1
+
+      - key: APP_ENV
+        value: production
+
+      # CORS_ORIGINS must include the exact frontend URL Render assigns.
+      # Update this after your first frontend deploy.
+      - key: CORS_ORIGINS
+        value: https://stadiumsense-frontend.onrender.com
+
+      # Simulator settings
+      - key: SIMULATOR_TICK_INTERVAL
+        value: "5.0"
+      - key: SIMULATOR_ALERT_THRESHOLD
+        value: "85.0"
+      - key: SIMULATOR_RECOVERY_THRESHOLD
+        value: "75.0"
+
+      # Rate limiting
+      - key: RATE_LIMIT_MAX_CALLS
+        value: "20"
+      - key: RATE_LIMIT_WINDOW_SECONDS
+        value: "60"
+
+      # Render injects PORT automatically — no need to set it here
+
+  # ---------------------------------------------------------------------------
+  # 2. Frontend — React SPA built with Vite, served as a static site
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: stadiumsense-frontend
+    runtime: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: ./frontend/dist
+    autoDeploy: true
+
+    # SPA routing: redirect all paths to index.html so React Router works
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+    envVars:
+      # Point the frontend at the deployed backend.
+      # Replace with your actual Render backend URL after first deploy.
+      - key: VITE_API_BASE_URL
+        value: https://stadiumsense-backend.onrender.com
